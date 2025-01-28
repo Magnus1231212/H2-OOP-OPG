@@ -1,10 +1,8 @@
-namespace H2_OOP_OPG
-{
+namespace H2_OOP_OPG {
     /// <summary>
     /// Represents the season category for summer houses.
     /// </summary>
-    public enum SaesonkategoriEnum
-    {
+    public enum SaesonkategoriEnum {
         /// <summary>
         /// Represents the super season, typically the highest demand period.
         /// </summary>

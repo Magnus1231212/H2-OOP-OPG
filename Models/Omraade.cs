@@ -1,10 +1,8 @@
-namespace H2_OOP_OPG
-{
+namespace H2_OOP_OPG {
     /// <summary>
     /// Represents an area associated with a consultant.
     /// </summary>
-    public class Omraade
-    {
+    public class Omraade {
         /// <summary>
         /// Gets the unique identifier for the area.
         /// </summary>
@@ -26,8 +24,7 @@ namespace H2_OOP_OPG
         /// <param name="omraadeID">The unique identifier for the area.</param>
         /// <param name="navn">The name of the area.</param>
         /// <param name="konsulentID">The unique identifier for the consultant.</param>
-        public Omraade(int omraadeID, string navn, int konsulentID)
-        {
+        public Omraade(int omraadeID, string navn, int konsulentID) {
             OmraadeID = omraadeID;
             Navn = navn;
             KonsulentID = konsulentID;

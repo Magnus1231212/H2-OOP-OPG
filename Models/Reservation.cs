@@ -1,10 +1,8 @@
-namespace H2_OOP_OPG
-{
+namespace H2_OOP_OPG {
     /// <summary>
     /// Represents a reservation for a property.
     /// </summary>
-    public class Reservation
-    {
+    public class Reservation {
         /// <summary>
         /// Gets the unique identifier for the reservation.
         /// </summary>
@@ -44,8 +42,7 @@ namespace H2_OOP_OPG
         /// <param name="startUge">The starting week of the reservation.</param>
         /// <param name="antalUger">The number of weeks for the reservation.</param>
         /// <param name="totalPris">The total price of the reservation.</param>
-        public Reservation(int reservationID, int husID, int kundeID, int startUge, int antalUger, double totalPris)
-        {
+        public Reservation(int reservationID, int husID, int kundeID, int startUge, int antalUger, double totalPris) {
             ReservationID = reservationID;
             HusID = husID;
             KundeID = kundeID;
