@@ -1,10 +1,8 @@
-namespace H2_OOP_OPG
-{
+namespace H2_OOP_OPG {
     /// <summary>
     /// Represents a customer with contact information.
     /// </summary>
-    public class Kunde
-    {
+    public class Kunde {
         /// <summary>
         /// Gets the unique identifier for the customer.
         /// </summary>
@@ -32,8 +30,7 @@ namespace H2_OOP_OPG
         /// <param name="navn">The name of the customer.</param>
         /// <param name="telefon">The phone number of the customer.</param>
         /// <param name="email">The email address of the customer.</param>
-        public Kunde(int kundeID, string navn, string telefon, string email)
-        {
+        public Kunde(int kundeID, string navn, string telefon, string email) {
             KundeID = kundeID;
             Navn = navn;
             Telefon = telefon;

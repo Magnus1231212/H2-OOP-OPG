@@ -1,10 +1,8 @@
-namespace H2_OOP_OPG
-{
+namespace H2_OOP_OPG {
     /// <summary>
     /// Represents an apartment complex and its associated details.
     /// </summary>
-    public class Lejlighedskompleks
-    {
+    public class Lejlighedskompleks {
         /// <summary>
         /// Gets the unique identifier for the apartment complex.
         /// </summary>
@@ -32,8 +30,7 @@ namespace H2_OOP_OPG
         /// <param name="inspektoerID">The unique identifier for the inspector.</param>
         /// <param name="type">The type of the apartment complex.</param>
         /// <param name="sommerhusID">The unique identifier for the summer house.</param>
-        public Lejlighedskompleks(int kompleksID, int inspektoerID, string type, int sommerhusID)
-        {
+        public Lejlighedskompleks(int kompleksID, int inspektoerID, string type, int sommerhusID) {
             KompleksID = kompleksID;
             InspektoerID = inspektoerID;
             Type = type;

@@ -1,10 +1,8 @@
-namespace H2_OOP_OPG
-{
+namespace H2_OOP_OPG {
     /// <summary>
     /// Represents an owner with personal and contact information.
     /// </summary>
-    public class Ejer
-    {
+    public class Ejer {
         /// <summary>
         /// Gets the unique identifier for the owner.
         /// </summary>
@@ -38,8 +36,7 @@ namespace H2_OOP_OPG
         /// <param name="email">The email address of the owner.</param>
         /// <param name="tlf">The phone number of the owner.</param>
         /// <param name="adresse">The address of the owner.</param>
-        public Ejer(int ejerID, string navn, string email, string tlf, string adresse)
-        {
+        public Ejer(int ejerID, string navn, string email, string tlf, string adresse) {
             EjerID = ejerID;
             Navn = navn;
             Email = email;
