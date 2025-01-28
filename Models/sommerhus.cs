@@ -8,12 +8,12 @@ public class Sommerhus {
     public int OmraadeID { get; private set; }
     public double StandardPris { get; private set; }
 
-     public Sommerhus(int husID, int ejerID, string lokation, string klassifikation, int omraadeID, double standardPris) {
-            HusID = husID
-            EjerID = ejerID
-            Lokation = lokation
-            Klassifikation = klassifikation
-            OmraadeID = omraadeID
-            StandardPris = standardPris
-        }
+    public Sommerhus(int husID, int ejerID, string lokation, string klassifikation, int omraadeID, double standardPris) {
+        HusID = husID;
+        EjerID = ejerID;
+        Lokation = lokation;
+        Klassifikation = klassifikation;
+        OmraadeID = omraadeID;
+        StandardPris = standardPris;
+    }
 }
