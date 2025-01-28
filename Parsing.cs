@@ -1,5 +1,6 @@
 namespace H2_OOP_OPG;
 
+using H2_OOP_OPG.Models;
 using MySqlConnector;
 
 public class Parsing {
