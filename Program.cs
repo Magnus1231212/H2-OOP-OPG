@@ -4,6 +4,8 @@ namespace H2_OOP_OPG;
 
 class Program {
     public static bool Exit = false;
+    public static bool LoggedIn = false;
+    public static string Username = "";
 
     static void Main(string[] args) {
         // Initialize the menu
@@ -21,8 +23,7 @@ class Program {
 
             // Array of actions to be called
             Action[] cases = {
-                    () => {},
-                    () => {},
+                    () => Admin.Login(),
                 };
 
             // Build main menu
