@@ -53,7 +53,6 @@ namespace H2_OOP_OPG {
             do {
                 Console.Title = $"{ProjectTitle} - {Title}";
 
-                Console.Clear();
                 Console.WriteLine("Please select an option: \n");
 
                 int index = 0;

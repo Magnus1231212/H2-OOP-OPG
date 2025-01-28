@@ -13,6 +13,9 @@ class Program {
 
         // Login menu
         do {
+            Console.Clear();
+            Console.WriteLine("Welcome to the Sommerhus Udlejning system\n");
+
             // Name of the project
             string Title = "Home";
 
@@ -36,6 +39,9 @@ class Program {
     public static void MainMenu() {
         // Main menu
         do {
+            Console.Clear();
+            Console.WriteLine($"Hey {Username}, Welcome to the Sommerhus Udlejning system\n");
+
             // Name of menu
             string name = "Main Menu";
 
