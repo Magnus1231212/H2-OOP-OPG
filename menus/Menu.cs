@@ -1,10 +1,8 @@
-namespace H2_OOP_OPG
-{
+namespace H2_OOP_OPG {
     /// <summary>
     /// Provides functionality for building and managing console menus with pagination.
     /// </summary>
-    internal class Menu
-    {
+    internal class Menu {
         /// <summary>
         /// The title of the project displayed in the console window title bar.
         /// </summary>
@@ -37,8 +35,7 @@ namespace H2_OOP_OPG
         /// <param name="_LoopToFirstPage">Determines whether pagination loops back to the first page.</param>
         /// <param name="_MaxOptions">The maximum number of options displayed per page in the main menu (default: 7).</param>
         /// <param name="_MaxSubOptions">The maximum number of options displayed per page in the sub menu (default: 7).</param>
-        public static void Initialize(string title, bool _LoopToFirstPage, int _MaxOptions = 7, int _MaxSubOptions = 7)
-        {
+        public static void Initialize(string title, bool _LoopToFirstPage, int _MaxOptions = 7, int _MaxSubOptions = 7) {
             ProjectTitle = title;
             MaxOptions = _MaxOptions;
             MaxSubOptions = _MaxSubOptions;
@@ -51,79 +48,62 @@ namespace H2_OOP_OPG
         /// <param name="Options">An array of menu options to display.</param>
         /// <param name="Cases">An array of actions corresponding to each menu option.</param>
         /// <param name="Title">The title of the menu to display in the console title bar.</param>
-        public static void buildMain(string[] Options, Action[] Cases, string Title)
-        {
+        public static void buildMain(string[] Options, Action[] Cases, string Title) {
             int choice = -1;
-            do
-            {
+            do {
                 Console.Title = $"{ProjectTitle} - {Title}";
 
-                Console.Clear();
                 Console.WriteLine("Please select an option: \n");
 
                 int index = 0;
-                foreach (string Option in GetPage(Options, Page, 0))
-                {
+                foreach (string Option in GetPage(Options, Page, 0)) {
                     index++;
                     Console.WriteLine($"\t{index}. {Option}");
                 }
 
-                if (Options.Length > MaxOptions)
-                {
+                if (Options.Length > MaxOptions) {
                     Console.WriteLine($"\n\t{MaxOptions + 1}. Next Page");
                 }
 
-                if (Page > 1)
-                {
+                if (Page > 1) {
                     Console.WriteLine($"\t{MaxOptions + 2}. Previous Page");
                 }
 
                 Console.WriteLine("\n\t0. Exit");
                 Console.Write("\nChoice: ");
 
-                if (!int.TryParse(Console.ReadLine(), out choice))
-                {
+                if (!int.TryParse(Console.ReadLine(), out choice)) {
                     choice = -1;
                 }
 
-                if (choice >= 1 && choice <= MaxOptions && choice <= Options.Length)
-                {
-                    try
-                    {
+                if (choice >= 1 && choice <= MaxOptions && choice <= Options.Length) {
+                    try {
                         ResetPage();
                         Cases[choice - 1]();
                     }
-                    catch (Exception e)
-                    {
+                    catch (Exception e) {
                         Console.WriteLine(e);
                     }
                     break;
                 }
-                else if (choice == (MaxOptions + 1))
-                {
-                    if (Options.Length > MaxOptions * Page)
-                    {
+                else if (choice == (MaxOptions + 1)) {
+                    if (Options.Length > MaxOptions * Page) {
                         Page++;
                     }
-                    else if (LoopToFirstPage)
-                    {
+                    else if (LoopToFirstPage) {
                         ResetPage();
                     }
                 }
-                else if (choice == (MaxOptions + 2))
-                {
-                    if (Page > 1)
-                    {
+                else if (choice == (MaxOptions + 2)) {
+                    if (Page > 1) {
                         Page--;
                     }
                 }
-                else if (choice == 0)
-                {
+                else if (choice == 0) {
                     Program.Exit = true;
                     break;
                 }
-                else
-                {
+                else {
                     Console.Clear();
                     Console.WriteLine("Please enter a valid number!");
                     Console.WriteLine("Press any key to continue...");
@@ -139,80 +119,64 @@ namespace H2_OOP_OPG
         /// <param name="Title">The title of the submenu to display in the console title bar.</param>
         /// <param name="Options">An array of submenu options to display.</param>
         /// <param name="Cases">An array of actions corresponding to each submenu option.</param>
-        public static void buildSub(string Title, string[] Options, Action[] Cases)
-        {
+        public static void buildSub(string Title, string[] Options, Action[] Cases) {
             int choice = -1;
-            do
-            {
+            do {
                 Console.Title = $"{ProjectTitle} - {Title}";
 
                 Console.Clear();
                 Console.WriteLine("Please select an option: \n");
 
                 int index = 0;
-                foreach (string Option in GetPage(Options, Page, 1))
-                {
+                foreach (string Option in GetPage(Options, Page, 1)) {
                     index++;
                     Console.WriteLine($"\t{index}. {Option}");
                 }
 
-                if (Options.Length > MaxSubOptions)
-                {
+                if (Options.Length > MaxSubOptions) {
                     Console.WriteLine($"\n\t{MaxSubOptions + 1}. Next Page");
                 }
 
-                if (Page > 1)
-                {
+                if (Page > 1) {
                     Console.WriteLine($"\t{MaxSubOptions + 2}. Previous Page");
                 }
 
                 Console.WriteLine("\n\t0. Go Back");
                 Console.Write("\nChoice: ");
 
-                if (!int.TryParse(Console.ReadLine(), out choice))
-                {
+                if (!int.TryParse(Console.ReadLine(), out choice)) {
                     choice = -1;
                 }
 
-                if (choice >= 1 && choice <= MaxSubOptions && choice <= Options.Length)
-                {
+                if (choice >= 1 && choice <= MaxSubOptions && choice <= Options.Length) {
                     Console.Clear();
-                    try
-                    {
+                    try {
                         ResetPage();
                         Cases[choice - 1]();
                     }
-                    catch (Exception e)
-                    {
+                    catch (Exception e) {
                         Console.WriteLine(e);
                     }
                     Console.WriteLine("\nPress any key to continue...");
                     Console.ReadKey();
                 }
-                else if (choice == (MaxSubOptions + 1))
-                {
-                    if (Options.Length > MaxSubOptions * Page)
-                    {
+                else if (choice == (MaxSubOptions + 1)) {
+                    if (Options.Length > MaxSubOptions * Page) {
                         Page++;
                     }
-                    else if (LoopToFirstPage)
-                    {
+                    else if (LoopToFirstPage) {
                         ResetPage();
                     }
                 }
-                else if (choice == (MaxSubOptions + 2))
-                {
-                    if (Page > 1)
-                    {
+                else if (choice == (MaxSubOptions + 2)) {
+                    if (Page > 1) {
                         Page--;
                     }
                 }
-                else if (choice == 0)
-                {
+                else if (choice == 0) {
                     break;
                 }
-                else
-                {
+                else {
                     Console.Clear();
                     Console.WriteLine("Please enter a valid number!");
                     Console.WriteLine("Press any key to continue...");
@@ -230,8 +194,7 @@ namespace H2_OOP_OPG
         /// <param name="page">The current page number.</param>
         /// <param name="type">Indicates if it's a main menu (0) or submenu (1).</param>
         /// <returns>An array of items to display on the current page.</returns>
-        public static Array GetPage<T>(T[] list, int page, int type)
-        {
+        public static Array GetPage<T>(T[] list, int page, int type) {
             if (type == 0)
                 return list.Skip((page - 1) * MaxOptions).Take(MaxOptions).ToArray();
             else
@@ -241,8 +204,7 @@ namespace H2_OOP_OPG
         /// <summary>
         /// Resets the page number to the first page.
         /// </summary>
-        public static void ResetPage()
-        {
+        public static void ResetPage() {
             Page = 1;
         }
     }
