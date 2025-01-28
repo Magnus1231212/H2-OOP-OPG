@@ -48,28 +48,7 @@ class Program {
 
         // Array of actions to be called
         Action[] cases = {
-                () => SommerhusEjere(),
-            };
-
-        // Build submenu
-        Menu.buildSub(name, options, cases);
-    }
-
-    public static void SommerhusEjere() {
-        // Name of submenu
-        string name = "Sommerhus Ejere";
-
-        // Options to be displayed
-        string[] options = {
-                "Opret Sommerhus Ejer",
-                "Rediger Sommerhus Ejer",
-                "Slet Sommerhus Ejer",
-                "Vis Sommerhus Ejer",
-            };
-
-        // Array of actions to be called
-        Action[] cases = {
-                () => {},
+                () => SommerhusEjere.SubMenu(),
             };
 
         // Build submenu
