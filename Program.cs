@@ -11,7 +11,7 @@ class Program {
         // Initialize the menu
         Menu.Initialize("Sommerhus Udlejning", true, 7, 7);
 
-        // Main menu
+        // Login menu
         do {
             // Name of the project
             string Title = "Home";
@@ -34,8 +34,9 @@ class Program {
     }
 
     public static void MainMenu() {
+        // Main menu
         do {
-            // Name of submenu
+            // Name of menu
             string name = "Main Menu";
 
             // Options to be displayed
