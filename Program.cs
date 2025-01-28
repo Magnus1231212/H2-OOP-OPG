@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using MySqlConnector;
+﻿using MySqlConnector;
 
 namespace H2_OOP_OPG;
 
