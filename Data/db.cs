@@ -12,8 +12,9 @@ class DB {
         return configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
     }
 
-    public static void openConnection() {
+    public static MySqlConnection openConnection() {
         using var connection = new MySqlConnection(GetConnectionString());
         connection.Open();
+        return connection;
     }
 }
