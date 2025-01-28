@@ -105,4 +105,106 @@ public class Parsing {
         );
     }
 
+    // Parse classes to SQL data
+    public static MySqlParameter[] ParseEjer(Ejer ejer) {
+        return new MySqlParameter[] {
+            new("EjerID", ejer.EjerID),
+            new("Navn", ejer.Navn),
+            new("Email", ejer.Email),
+            new("Tlf", ejer.Tlf),
+            new("Adresse", ejer.Adresse)
+        };
+    }
+
+    public static MySqlParameter[] ParseSommerhus(Sommerhus sommerhus) {
+        return new MySqlParameter[] {
+            new("HusID", sommerhus.HusID),
+            new("EjerID", sommerhus.EjerID),
+            new("Lokation", sommerhus.Lokation),
+            new("Klassifikation", sommerhus.Klassifikation),
+            new("OmraadeID", sommerhus.OmraadeID),
+            new("StandardPris", sommerhus.StandardPris)
+        };
+    }
+
+    public static MySqlParameter[] ParseReservation(Reservation reservation) {
+        return new MySqlParameter[] {
+            new("ReservationID", reservation.ReservationID),
+            new("HusID", reservation.HusID),
+            new("KundeID", reservation.KundeID),
+            new("StartUge", reservation.StartUge),
+            new("AntalUger", reservation.AntalUger),
+            new("TotalPris", reservation.TotalPris)
+        };
+    }
+
+    public static MySqlParameter[] ParseKunde(Kunde kunde) {
+        return new MySqlParameter[] {
+            new("KundeID", kunde.KundeID),
+            new("Navn", kunde.Navn),
+            new("Telefon", kunde.Telefon),
+            new("Email", kunde.Email)
+        };
+    }
+
+    public static MySqlParameter[] ParseOmraade(Omraade omraade) {
+        return new MySqlParameter[] {
+            new("OmraadeID", omraade.OmraadeID),
+            new("Navn", omraade.Navn),
+            new("KonsulentID", omraade.KonsulentID)
+        };
+    }
+
+    public static MySqlParameter[] ParseKonsulent(Konsulent konsulent) {
+        return new MySqlParameter[] {
+            new("KonsulentID", konsulent.KonsulentID),
+            new("Navn", konsulent.Navn),
+            new("KontaktInfo", konsulent.KontaktInfo)
+        };
+    }
+
+
+    public static MySqlParameter[] ParseInspektoer(Inspektoer inspektoer) {
+        return new MySqlParameter[] {
+            new("InspektoerID", inspektoer.InspektoerID),
+            new("Navn", inspektoer.Navn),
+            new("KontaktInfo", inspektoer.KontaktInfo)
+        };
+    }
+
+    public static MySqlParameter[] ParseSaesonkategori(Saesonkategori saesonkategori) {
+        return new MySqlParameter[] {
+            new("KategoriID", saesonkategori.KategoriID),
+            new("Navn", saesonkategori.Navn),
+            new("Uger", saesonkategori.Uger),
+            new("Saeson", saesonkategori.Saeson),
+            new("PrisProcent", saesonkategori.PrisProcent)
+        };
+    }
+
+    public static MySqlParameter[] ParseLejlighedskompleks(Lejlighedskompleks lejlighedskompleks) {
+        return new MySqlParameter[] {
+            new("KompleksID", lejlighedskompleks.KompleksID),
+            new("InspektoerID", lejlighedskompleks.InspektoerID),
+            new("Type", lejlighedskompleks.Type),
+            new("SommerhusID", lejlighedskompleks.SommerhusID)
+        };
+    }
+
+    public static MySqlParameter[] ParseSommerhusSaesonPris(SommerhusSaesonPris sommerhusSaesonPris) {
+        return new MySqlParameter[] {
+            new("StandardPris", sommerhusSaesonPris.StandardPris),
+            new("SommerhusID", sommerhusSaesonPris.SommerhusID),
+            new("SaesonkategoriID", sommerhusSaesonPris.SaesonkategoriID)
+        };
+    }
+
+    public static MySqlParameter[] ParseUser(User user) {
+        return new MySqlParameter[] {
+            new("UserID", user.UserID),
+            new("Brugernavn", user.Brugernavn),
+            new("Adgangskode", user.Adgangskode)
+        };
+    }
+
 }
