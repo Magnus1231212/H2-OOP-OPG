@@ -13,7 +13,7 @@ class DB {
     }
 
     public static MySqlConnection openConnection() {
-        using var connection = new MySqlConnection(GetConnectionString());
+        var connection = new MySqlConnection(GetConnectionString());
         connection.Open();
         return connection;
     }
