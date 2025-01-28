@@ -29,15 +29,17 @@ class Program {
             // Build main menu
             Menu.buildMain(options, cases, Title);
 
-        } while (!Exit);
+        } while (!LoggedIn);
+        MainMenu();
     }
 
     public static void MainMenu() {
-        // Name of submenu
-        string name = "Main Menu";
+        do {
+            // Name of submenu
+            string name = "Main Menu";
 
-        // Options to be displayed
-        string[] options = {
+            // Options to be displayed
+            string[] options = {
                 "Sommerhus Ejere",
                 "Sommerhuse",
                 "Udlejninger",
@@ -46,12 +48,14 @@ class Program {
                 "Inspectører",
             };
 
-        // Array of actions to be called
-        Action[] cases = {
+            // Array of actions to be called
+            Action[] cases = {
                 () => SommerhusEjere.SubMenu(),
             };
 
-        // Build submenu
-        Menu.buildSub(name, options, cases);
+            // Build submenu
+            Menu.buildMain(options, cases, name);
+
+        } while (!Exit);
     }
 }
