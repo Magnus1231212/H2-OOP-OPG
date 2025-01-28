@@ -1,14 +1,36 @@
-namespace H2_OOP_OPG;
+namespace H2_OOP_OPG
+{
+    /// <summary>
+    /// Represents a consultant with contact information.
+    /// </summary>
+    public class Konsulent
+    {
+        /// <summary>
+        /// Gets the unique identifier for the consultant.
+        /// </summary>
+        public int KonsulentID { get; private set; }
 
-public class Konsulent {
-    public int KonsulentID { get; private set; }
-    public string Navn { get; private set; }
-    public string KontaktInfo { get; private set; }
+        /// <summary>
+        /// Gets the name of the consultant.
+        /// </summary>
+        public string Navn { get; private set; }
 
+        /// <summary>
+        /// Gets the contact information for the consultant.
+        /// </summary>
+        public string KontaktInfo { get; private set; }
 
-    public Konsulent(int konsulentID, string navn, string kontaktInfo) {
-        KonsulentID = konsulentID;
-        Navn = navn;
-        KontaktInfo = kontaktInfo;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Konsulent"/> class.
+        /// </summary>
+        /// <param name="konsulentID">The unique identifier for the consultant.</param>
+        /// <param name="navn">The name of the consultant.</param>
+        /// <param name="kontaktInfo">The contact information for the consultant.</param>
+        public Konsulent(int konsulentID, string navn, string kontaktInfo)
+        {
+            KonsulentID = konsulentID;
+            Navn = navn;
+            KontaktInfo = kontaktInfo;
+        }
     }
 }
