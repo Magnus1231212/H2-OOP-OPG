@@ -17,6 +17,7 @@ namespace H2_OOP_OPG {
                 "Rediger udlejning",
                 "Slet udlejning",
                 "Vis udlejning",
+                "Vis udlejninger for sommerhus",
             };
 
             // Array of actions to be called
@@ -25,6 +26,7 @@ namespace H2_OOP_OPG {
                 () => Edit(),
                 () => Delete(),
                 () => Show(),
+                () => ShowAllByHouse(),
             };
 
             // Build submenu
@@ -230,7 +232,43 @@ namespace H2_OOP_OPG {
         /// Displays information about a booking.
         /// </summary>
         public static void Show() {
+            Console.WriteLine("Indtast reservations ID for at vise");
+            if (!int.TryParse(Console.ReadLine(), out int reservationID)) {
+                Console.WriteLine("Uguvalid reservations ID");
+                return;
+            }
 
+            Reservation reservation = Reservation.FindReservation(reservationID);
+            if (reservation == null) {
+                Console.WriteLine("Reservation ikke fundet");
+                return;
+            }
+
+            Console.WriteLine($"Reservation {reservationID}");
+            Console.WriteLine($"Hus ID: {reservation.HusID}");
+            Console.WriteLine($"Kunde ID: {reservation.KundeID}");
+            Console.WriteLine($"Start uge: {reservation.StartUge}");
+            Console.WriteLine($"Antal uger: {reservation.AntalUger}");
+            Console.WriteLine($"Total pris: {reservation.TotalPris}");
+        }
+
+        public static void ShowAllByHouse() {
+            Console.WriteLine("Indtast hus ID for at vise alle reservationer");
+            if (!int.TryParse(Console.ReadLine(), out int houseID)) {
+                Console.WriteLine("Uguvalid hus ID");
+                return;
+            }
+            Reservation[] reservations = Reservation.FindReservations(houseID);
+            foreach (Reservation reservation in reservations) {
+                Console.WriteLine("\n-------------------------------\n");
+
+                Console.WriteLine($"Reservation {reservation.ReservationID}");
+                Console.WriteLine($"Hus ID: {reservation.HusID}");
+                Console.WriteLine($"Kunde ID: {reservation.KundeID}");
+                Console.WriteLine($"Start uge: {reservation.StartUge}");
+                Console.WriteLine($"Antal uger: {reservation.AntalUger}");
+                Console.WriteLine($"Total pris: {reservation.TotalPris}");
+            }
         }
     }
 }

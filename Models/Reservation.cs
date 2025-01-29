@@ -107,4 +107,23 @@ public class Reservation
         MySqlDataReader reader = command.ExecuteReader();
         return !reader.Read();
     }
+
+    public static Reservation[] FindReservations(int husID)
+    {
+        MySqlConnection connection = DB.openConnection();
+        MySqlCommand command = connection.CreateCommand();
+        command.CommandText = "SELECT * FROM Reservation WHERE HusID = @husID";
+        command.Parameters.AddWithValue("@husID", husID);
+
+        MySqlDataReader reader = command.ExecuteReader();
+        List<Reservation> reservations = new List<Reservation>();
+
+        while (reader.Read())
+        {
+            Reservation reservation = Parsing.ParseReservation(reader);
+            reservations.Add(reservation);
+        }
+
+        return reservations.ToArray();
+    }
 }
