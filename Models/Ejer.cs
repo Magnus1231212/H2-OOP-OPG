@@ -77,7 +77,15 @@ namespace H2_OOP_OPG {
         public bool Save() {
             MySqlConnection connection = DB.openConnection();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO Ejer (Navn, Email, Tlf, Adresse) VALUES (@navn, @email, @tlf, @adresse)";
+            command.CommandText = @"
+                INSERT INTO Ejer (EjerID, Navn, Email, Tlf, Adresse)
+                VALUES (@ejerID, @navn, @email, @tlf, @adresse)
+                ON DUPLICATE KEY UPDATE
+                    Navn = VALUES(Navn),
+                    Email = VALUES(Email),
+                    Tlf = VALUES(Tlf),
+                    Adresse = VALUES(Adresse)";
+            command.Parameters.AddWithValue("@ejerID", EjerID);
             command.Parameters.AddWithValue("@navn", Navn);
             command.Parameters.AddWithValue("@email", Email);
             command.Parameters.AddWithValue("@tlf", Tlf);

@@ -69,7 +69,40 @@ namespace H2_OOP_OPG {
         /// Handles the editing of an existing summer house owner.
         /// </summary>
         public static void Edit() {
-            Console.WriteLine("Rediger Sommerhus Ejer");
+            Console.WriteLine("Ejer ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int id)) {
+                Console.WriteLine("Ugyldigt ID.");
+                return;
+            }
+
+            Ejer owner = Ejer.FindEjer(id);
+            if (owner == null) {
+                Console.WriteLine("Ejer findes ikke.");
+                return;
+            }
+
+            Console.WriteLine($"Navn ({owner.Navn}): ");
+            string name = Console.ReadLine() ?? "";
+            Console.WriteLine($"Email ({owner.Email}): ");
+            string email = Console.ReadLine() ?? "";
+            Console.WriteLine($"Telefon ({owner.Tlf}): ");
+            string phone = Console.ReadLine() ?? "";
+            Console.WriteLine($"Adresse ({owner.Adresse}): ");
+            string address = Console.ReadLine() ?? "";
+
+            if (name == "" || email == "" || phone == "" || address == "") {
+                Console.WriteLine("Alle felter skal udfyldes.");
+                return;
+            }
+
+            Ejer newOwner = new Ejer(id, name, email, phone, address);
+            if (newOwner.Save()) {
+                Console.WriteLine("Ejer opdateret.");
+            } else {
+                Console.WriteLine("Der skete en fejl.");
+            }
+
+
         }
 
         /// <summary>
