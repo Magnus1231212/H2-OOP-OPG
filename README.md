@@ -62,3 +62,19 @@ Filnavn: `appsettings.json`
    dotnet build
    dotnet run
    ```
+
+### Opsætning af Database via phpMyAdmin
+
+1. Åbn phpMyAdmin i din webbrowser.
+2. Log ind med dine databaseadministratoroplysninger.
+3. Klik på "Databaser" i topmenuen.
+4. Indtast et navn til din nye database i feltet "Opret database" (f.eks. `sommerhusudlejning`).
+5. Klik på "Opret" for at oprette databasen.
+6. Åbn `db.sql`-filen i en teksteditor.
+7. Ændr navnet på databasen i toppen af filen til navnet på din database (f.eks. `sommerhusudlejning`).
+8. Vælg den nyoprettede database fra listen til venstre i phpMyAdmin.
+9. Klik på "Importer" i topmenuen.
+10. Klik på "Vælg fil" og vælg så db.sql
+11. Klik på "Udfør" for at importere databasen.
+
+Din database er nu opsat og klar til brug med applikationen.
