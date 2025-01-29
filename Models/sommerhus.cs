@@ -54,16 +54,52 @@ public class Sommerhus {
         StandardPris = standardPris;
     }
 
-    public static Sommerhus FindSommerhus(int id) {
+public static Sommerhus FindSommerhus(int id) {
+    MySqlConnection connection = DB.openConnection();
+    MySqlCommand command = connection.CreateCommand();
+    command.CommandText = "SELECT * FROM Sommerhus WHERE HusID = @id";
+    command.Parameters.AddWithValue("@id", id);
+
+    MySqlDataReader reader = command.ExecuteReader();
+    if (!reader.Read()) {  // Check if data exists before parsing
+        connection.Close();
+        return null;
+    }
+
+    Sommerhus sommerhus = Parsing.ParseSommerhus(reader);
+    connection.Close();
+    return sommerhus;
+}
+
+    public static Sommerhus FindSommerhus(string location) {
         MySqlConnection connection = DB.openConnection();
         MySqlCommand command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM Sommerhus WHERE HusID = @id";
-        command.Parameters.AddWithValue("@id", id);
+        command.CommandText = "SELECT * FROM Sommerhus WHERE Lokation = @location";
+        command.Parameters.AddWithValue("@location", location);
 
         MySqlDataReader reader = command.ExecuteReader();
-        reader.Read();
+        if (!reader.Read()) {
+            connection.Close();
+            return null;
+        }
+
         Sommerhus sommerhus = Parsing.ParseSommerhus(reader);
         connection.Close();
         return sommerhus;
+    }
+
+    public bool Save() {
+        MySqlConnection connection = DB.openConnection();
+        MySqlCommand command = connection.CreateCommand();
+        command.CommandText = "INSERT INTO Sommerhus (EjerID, Lokation, Klassifikation, OmraadeID, StandardPris) VALUES (@ejerID, @lokation, @klassifikation, @omraadeID, @standardPris)";
+        command.Parameters.AddWithValue("@ejerID", EjerID);
+        command.Parameters.AddWithValue("@lokation", Lokation);
+        command.Parameters.AddWithValue("@klassifikation", Klassifikation);
+        command.Parameters.AddWithValue("@omraadeID", OmraadeID);
+        command.Parameters.AddWithValue("@standardPris", StandardPris);
+
+        int rows = command.ExecuteNonQuery();
+        connection.Close();
+        return rows > 0;
     }
 }

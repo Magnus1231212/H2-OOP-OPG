@@ -95,14 +95,78 @@ namespace H2_OOP_OPG {
         /// Handles the editing of an existing booking.
         /// </summary>
         public static void Edit() {
+            Console.WriteLine("Indtast reservations ID for at redigere");
+            if (!int.TryParse(Console.ReadLine(), out int reservationID)) {
+                Console.WriteLine("Uguvalid reservations ID");
+                return;
+            }
 
+            Reservation reservation = Reservation.FindReservation(reservationID);
+            if (reservation == null) {
+                Console.WriteLine("Reservation ikke fundet");
+                return;
+            }
+
+            Console.WriteLine("Indtast ny start uge af reservationen");
+            if (!int.TryParse(Console.ReadLine(), out int newStartWeek)) {
+                Console.WriteLine("Uguvalid uge");
+                return;
+            }
+
+            Console.WriteLine("Indtast nyt antal uger af reservationen");
+            if (!int.TryParse(Console.ReadLine(), out int newWeekCount)) {
+                Console.WriteLine("Uguvalid tal");
+                return;
+            }
+
+            if (!Reservation.IsValidTimeframe(reservation.HusID, newStartWeek, newWeekCount)) {
+                Console.WriteLine("Invalid timeframe");
+                return;
+            }
+
+            SommerhusSaesonPris pris = SommerhusSaesonPris.FindSommerhusSaesonPris(reservation.HusID);
+            Saesonkategori saeson = Saesonkategori.FindSaesonkategori(pris.SaesonkategoriID);
+
+            double newPricePerWeek = pris.StandardPris * saeson.PrisProcent;
+            double newTotalPrice = newPricePerWeek * newWeekCount;
+
+            Reservation newReservation = new Reservation(reservationID, reservation.HusID, reservation.KundeID, newStartWeek, newWeekCount, newTotalPrice);
+
+            if (newReservation.Save()) {
+                Console.WriteLine("Reservation opdateret");
+            } else {
+                Console.WriteLine("Kunne ikke opdatere reservation");
+            }
         }
 
         /// <summary>
         /// Handles the deletion of an existing booking.
         /// </summary>
         public static void Delete() {
+            Console.WriteLine("Indtast reservations ID for at slette");
+            if (!int.TryParse(Console.ReadLine(), out int reservationID)) {
+                Console.WriteLine("Uguvalid reservations ID");
+                return;
+            }
 
+            Reservation reservation = Reservation.FindReservation(reservationID);
+            if (reservation == null) {
+                Console.WriteLine("Reservation ikke fundet");
+                return;
+            }
+
+            Console.WriteLine($"Er du sikker på at du vil slette reservation {reservationID}? (y/n)");
+            string confirm = Console.ReadLine() ?? "";
+            if (confirm != "y") {
+                Console.WriteLine("Sletning afbrudt");
+                return;
+            }
+
+            if (reservation.Delete()) {
+                Console.WriteLine("Reservation slettet");
+            } else {
+                Console.WriteLine("Kunne ikke slette reservation");
+            }
         }
 
         /// <summary>
