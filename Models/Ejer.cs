@@ -1,6 +1,7 @@
 using MySqlConnector;
 
 namespace H2_OOP_OPG {
+
     /// <summary>
     /// Represents an owner with personal and contact information.
     /// </summary>
@@ -46,6 +47,7 @@ namespace H2_OOP_OPG {
             Adresse = adresse;
         }
 
+
         public static Ejer FindEjer(int id) {
             MySqlConnection connection = DB.openConnection();
             MySqlCommand command = connection.CreateCommand();
@@ -57,6 +59,33 @@ namespace H2_OOP_OPG {
             Ejer ejer = Parsing.ParseEjer(reader);
             connection.Close();
             return ejer;
+        }
+
+        public static Ejer FindEjer(string email) {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Ejer WHERE Email = @email";
+            command.Parameters.AddWithValue("@email", email);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            Ejer ejer = Parsing.ParseEjer(reader);
+            connection.Close();
+            return ejer;
+        }
+
+        public bool Save() {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "INSERT INTO Ejer (Navn, Email, Tlf, Adresse) VALUES (@navn, @email, @tlf, @adresse)";
+            command.Parameters.AddWithValue("@navn", Navn);
+            command.Parameters.AddWithValue("@email", Email);
+            command.Parameters.AddWithValue("@tlf", Tlf);
+            command.Parameters.AddWithValue("@adresse", Adresse);
+
+            int rows = command.ExecuteNonQuery();
+            connection.Close();
+            return rows > 0;
         }
     }
 }

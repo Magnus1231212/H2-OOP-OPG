@@ -1,4 +1,5 @@
 namespace H2_OOP_OPG {
+    using Models;
     /// <summary>
     /// Handles operations related to summer house owners, including creating, editing, deleting, and viewing them.
     /// </summary>
@@ -34,7 +35,34 @@ namespace H2_OOP_OPG {
         /// Handles the creation of a new summer house owner.
         /// </summary>
         public static void Create() {
-            Console.WriteLine("Opret Sommerhus Ejer");
+            // Ask for name, email, phone number, and address
+            Console.Write("Navn: ");
+            string name = Console.ReadLine() ?? "";
+            Console.Write("Email: ");
+            string email = Console.ReadLine() ?? "";
+            Console.Write("Telefon: ");
+            string phone = Console.ReadLine() ?? "";
+            Console.Write("Adresse: ");
+            string address = Console.ReadLine() ?? "";
+
+            if (name == "" || email == "" || phone == "" || address == "") {
+                Console.WriteLine("Alle felter skal udfyldes.");
+                return;
+            }
+
+            if (Ejer.FindEjer(email) != null) {
+                Console.WriteLine("Ejer findes allerede.");
+                return;
+            }
+
+            // Create a new owner
+            Ejer owner = new Ejer(0, name, email, phone, address);
+            if (owner.Save()) {
+                Console.WriteLine("Ejer oprettet.");
+            } else {
+                Console.WriteLine("Der skete en fejl.");
+            }
+
         }
 
         /// <summary>
