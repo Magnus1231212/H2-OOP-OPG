@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using MySqlConnector;
 
 namespace H2_OOP_OPG {
     /// <summary>
@@ -14,21 +15,28 @@ namespace H2_OOP_OPG {
             Console.WriteLine("Login");
 
             Console.Write("Username: ");
-            string username = Console.ReadLine();
+            string username = Console.ReadLine() ?? string.Empty;
 
             Console.Write("Password: ");
-            string password = Console.ReadLine();
+            string password = Console.ReadLine() ?? string.Empty;
 
-            if (username == "admin" && password == "admin") {
-                Program.LoggedIn = true;
-                Program.Username = username;
-                Console.WriteLine("Logged in as " + username);
-                Console.ReadKey();
+            using (var connection = DB.openConnection()) {
+                var query = "SELECT * FROM User";
+                using var command = new MySqlCommand(query, connection);
+                using var reader = command.ExecuteReader();
+                string _password = HashPassword(password);
+                while (reader.Read()) {
+                    if (reader.GetString("Brugernavn") == username && reader.GetString("Adgangskode") == _password) {
+                        Program.LoggedIn = true;
+                        Program.Username = username;
+                        Console.WriteLine("Logged in as " + username);
+                        Console.ReadKey();
+                        return;
+                    }
+                }
             }
-            else {
-                Console.WriteLine("Invalid username or password");
-                Console.ReadKey();
-            }
+            Console.WriteLine("Invalid username or password");
+            Console.ReadKey();
         }
 
         /// <summary>
