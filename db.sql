@@ -17,9 +17,6 @@ TRUNCATE TABLE `Inspektoer`;
 TRUNCATE TABLE `Ejer`;
 TRUNCATE TABLE `User`;
 
--- Re-enable foreign key checks
-SET FOREIGN_KEY_CHECKS = 1;
-
 CREATE TABLE IF NOT EXISTS `Ejer` (
   `EjerID` INT PRIMARY KEY AUTO_INCREMENT,
   `Navn` VARCHAR(100) NOT NULL,
@@ -194,3 +191,6 @@ INSERT INTO `SommerhusSaesonPris` (`StandardPris`, `SommerhusID`, `Saesonkategor
 -- Insert data into `User`
 INSERT INTO `User` (`UserID`, `Brugernavn`, `Adgangskode`) VALUES
 (1, 'admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=') -- admin:admin
+
+-- Re-enable foreign key checks
+SET FOREIGN_KEY_CHECKS = 1;
