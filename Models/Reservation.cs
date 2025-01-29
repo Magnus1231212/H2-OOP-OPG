@@ -74,7 +74,7 @@ public class Reservation
     public bool Save() {
         MySqlConnection connection = DB.openConnection();
         MySqlCommand command = connection.CreateCommand();
-        command.CommandText = "INSERT INTO Reservation (HusID, KundeID, StartUge, AntalUger, TotalPris) VALUES (@husID, @kundeID, @startUge, @antalUger, @totalPris)";
+        command.CommandText = "INSERT INTO Reservation (HusID, KundeID, StartUge, AntalUger, TotalPris) VALUES (@husID, @kundeID, @startUge, @antalUger, @totalPris) ON DUPLICATE KEY UPDATE HusID = VALUES(HusID), KundeID = VALUES(KundeID), StartUge = VALUES(StartUge), AntalUger = VALUES(AntalUger), TotalPris = VALUES(TotalPris)";
         command.Parameters.AddWithValue("@husID", this.HusID);
         command.Parameters.AddWithValue("@kundeID", this.KundeID);
         command.Parameters.AddWithValue("@startUge", this.StartUge);
@@ -82,7 +82,18 @@ public class Reservation
         command.Parameters.AddWithValue("@totalPris", this.TotalPris);
 
         int rows = command.ExecuteNonQuery();
-        return rows == 1;
+        return rows >= 1;
+    }
+
+    public bool Delete()
+    {
+        MySqlConnection connection = DB.openConnection();
+        MySqlCommand command = connection.CreateCommand();
+        command.CommandText = "DELETE FROM Reservation WHERE ReservationID = @id";
+        command.Parameters.AddWithValue("@id", ReservationID);
+
+        int rows = command.ExecuteNonQuery();
+        return rows >= 1;
     }
 
     public static bool IsValidTimeframe(int husID, int startUge, int antalUger)

@@ -72,10 +72,16 @@ namespace H2_OOP_OPG {
             command.Parameters.AddWithValue("@email", email);
 
             MySqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            Ejer ejer = Parsing.ParseEjer(reader);
-            connection.Close();
-            return ejer;
+            using (reader)
+            {
+                if (!reader.Read())
+                {
+                    return null;
+                }
+                Ejer ejer = Parsing.ParseEjer(reader);
+                connection.Close();
+                return ejer;
+            }
         }
 
         public bool Save()
