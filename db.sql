@@ -193,4 +193,4 @@ INSERT INTO `SommerhusSaesonPris` (`StandardPris`, `SommerhusID`, `Saesonkategor
 
 -- Insert data into `User`
 INSERT INTO `User` (`UserID`, `Brugernavn`, `Adgangskode`) VALUES
-(1, 'admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg='), -- admin:admin
+(1, 'admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=') -- admin:admin
