@@ -100,7 +100,7 @@ namespace H2_OOP_OPG {
                     }
                 }
                 else if (choice == 0) {
-                    Program.Exit = true;
+                    Environment.Exit(0);
                     break;
                 }
                 else {
