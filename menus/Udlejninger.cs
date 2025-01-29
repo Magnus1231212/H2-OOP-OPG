@@ -63,12 +63,42 @@ namespace H2_OOP_OPG {
             }
 
             Sommerhus sommerhus = Sommerhus.FindSommerhus(houseID);
-            SommerhusSaesonPris pris = SommerhusSaesonPris.FindSommerhusSaesonPris(houseID);
-            Saesonkategori saeson = Saesonkategori.FindSaesonkategori(pris.SaesonkategoriID);
+            SommerhusSaesonPris[] priser = SommerhusSaesonPris.FindSommerhusSaesonPris(houseID);
+
+            if (sommerhus == null || priser.Length == 0) {
+                Console.WriteLine("Hus eller pris ikke fundet");
+                return;
+            }
+
+            Saesonkategori[] saesoner = new Saesonkategori[priser.Length];
+            for (int i = 0; i < priser.Length; i++) {
+                saesoner[i] = Saesonkategori.FindSaesonkategori(priser[i].SaesonkategoriID);
+            }
+
+            int[] weeks = new int[weekCount];
+            for (int i = 0; i < weekCount; i++) {
+                weeks[i] = startWeek + i;
+            }
+            double totalPrice = 0;
 
 
-            double pricePerWeek = pris.StandardPris * saeson.PrisProcent;
-            double totalPrice = pricePerWeek * weekCount;
+            foreach (Saesonkategori saeson in saesoner) {
+                // Parse season.Uger from "[int,int,int]" to int[]
+                string[] weekStrings = saeson.Uger.Trim('[', ']').Split(',');
+                int[] seasonWeeks = Array.ConvertAll(weekStrings, int.Parse);
+
+                double pricePerWeek = priser[0].StandardPris * saeson.PrisProcent;
+                for (int i = 0; i < weekCount; i++) {
+                    if (seasonWeeks.Contains(weeks[i])) {
+                        totalPrice += pricePerWeek;
+                        weeks = weeks.Where(w => w != weeks[i]).ToArray();
+                        weekCount--;
+                    }
+                }
+            }
+
+            // Handle the weeks that are not part of a season
+            totalPrice += weeks.Length * priser[0].StandardPris;
 
             if (!Reservation.IsValidTimeframe(startWeek, weekCount, houseID)) {
                 Console.WriteLine("Invalid timeframe");
@@ -123,11 +153,39 @@ namespace H2_OOP_OPG {
                 return;
             }
 
-            SommerhusSaesonPris pris = SommerhusSaesonPris.FindSommerhusSaesonPris(reservation.HusID);
-            Saesonkategori saeson = Saesonkategori.FindSaesonkategori(pris.SaesonkategoriID);
+            SommerhusSaesonPris[] priser = SommerhusSaesonPris.FindSommerhusSaesonPris(reservation.HusID);
 
-            double newPricePerWeek = pris.StandardPris * saeson.PrisProcent;
-            double newTotalPrice = newPricePerWeek * newWeekCount;
+            if (priser.Length == 0) {
+                Console.WriteLine("Pris ikke fundet");
+                return;
+            }
+
+            Saesonkategori[] saesoner = new Saesonkategori[priser.Length];
+            for (int i = 0; i < priser.Length; i++) {
+                saesoner[i] = Saesonkategori.FindSaesonkategori(priser[i].SaesonkategoriID);
+            }
+
+            int[] weeks = new int[newWeekCount];
+            for (int i = 0; i < newWeekCount; i++) {
+                weeks[i] = newStartWeek + i;
+            }
+            double newTotalPrice = 0;
+
+            foreach (Saesonkategori saeson in saesoner) {
+                string[] weekStrings = saeson.Uger.Trim('[', ']').Split(',');
+                int[] seasonWeeks = Array.ConvertAll(weekStrings, int.Parse);
+
+                double pricePerWeek = priser[0].StandardPris * saeson.PrisProcent;
+                for (int i = 0; i < newWeekCount; i++) {
+                    if (seasonWeeks.Contains(weeks[i])) {
+                        newTotalPrice += pricePerWeek;
+                        weeks = weeks.Where(w => w != weeks[i]).ToArray();
+                        newWeekCount--;
+                    }
+                }
+            }
+
+            newTotalPrice += weeks.Length * priser[0].StandardPris;
 
             Reservation newReservation = new Reservation(reservationID, reservation.HusID, reservation.KundeID, newStartWeek, newWeekCount, newTotalPrice);
 

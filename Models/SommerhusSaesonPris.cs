@@ -32,18 +32,20 @@ public class SommerhusSaesonPris {
         SaesonkategoriID = saesonkategoriID;
     }
 
-    public static SommerhusSaesonPris FindSommerhusSaesonPris(int HusID) {
+    public static SommerhusSaesonPris[] FindSommerhusSaesonPris(int HusID) {
         MySqlConnection connection = DB.openConnection();
         MySqlCommand command = connection.CreateCommand();
         command.CommandText = "SELECT * FROM SommerhusSaesonPris WHERE SommerhusID = @id";
         command.Parameters.AddWithValue("@id", HusID);
 
         MySqlDataReader reader = command.ExecuteReader();
-        if (!reader.Read()) {
-            return null;
-        }
-        SommerhusSaesonPris pris = Parsing.ParseSommerhusSaesonPris(reader);
-        return pris;
+        List<SommerhusSaesonPris> priser = new List<SommerhusSaesonPris>();
 
+        while (reader.Read()) {
+            SommerhusSaesonPris pris = Parsing.ParseSommerhusSaesonPris(reader);
+            priser.Add(pris);
+        }
+
+        return priser.ToArray();
     }
 }

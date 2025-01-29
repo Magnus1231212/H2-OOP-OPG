@@ -1,5 +1,5 @@
 -- Use the database
-USE `YourDatabaseName`;
+USE `SommerhusDB`;
 
 -- Disable foreign key checks to avoid conflicts during truncation
 SET FOREIGN_KEY_CHECKS = 0;
@@ -167,10 +167,10 @@ INSERT INTO `Reservation` (`ReservationID`, `HusID`, `KundeID`, `StartUge`, `Ant
 
 -- Insert data into `Saesonkategori`
 INSERT INTO `Saesonkategori` (`KategoriID`, `Navn`, `Uger`, `Saeson`, `PrisProcent`) VALUES
-(1, 'Peak Season', '24-35', 'super', 1.50),
-(2, 'High Season', '12-23', 'hoej', 1.20),
-(3, 'Low Season', '1-11', 'lav', 0.80),
-(4, 'Mid Season', '36-48', 'medium', 1.00);
+(1, 'Peak Season', '[24,25,26,27,28,29,30,31,32,33,34,35]', 'super', 1.50),
+(2, 'High Season', '[12,13,14,15,16,17,18,19,20,21,22,23]', 'hoej', 1.20),
+(3, 'Low Season', '[1,2,3,4,5,6,7,8,9,10,11]', 'lav', 0.80),
+(4, 'Mid Season', '[36,37,38,39,40,41,42,43,44,45,46,47,48]', 'medium', 1.00);
 
 -- Insert data into `Sommerhus`
 INSERT INTO `Sommerhus` (`HusID`, `EjerID`, `Lokation`, `Klassifikation`, `OmraadeID`, `StandardPris`) VALUES
@@ -190,7 +190,7 @@ INSERT INTO `SommerhusSaesonPris` (`StandardPris`, `SommerhusID`, `Saesonkategor
 
 -- Insert data into `User`
 INSERT INTO `User` (`UserID`, `Brugernavn`, `Adgangskode`) VALUES
-(1, 'admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=') -- admin:admin
+(1, 'admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg='); -- admin:admin
 
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;
