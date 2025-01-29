@@ -37,13 +37,13 @@ namespace H2_OOP_OPG {
         public static void Create() {
             Console.Write("Ejer Email: ");
             string email = Console.ReadLine() ?? "";
-            
+
             Ejer owner = Ejer.FindEjer(email);
             if (owner == null) {
                 Console.WriteLine("Ejer ikke fundet.");
                 return;
             }
-            
+
             Console.Write("Lokation: ");
             string location = Console.ReadLine() ?? "";
             Console.Write("Klassifikation: ");
@@ -62,30 +62,94 @@ namespace H2_OOP_OPG {
             Sommerhus sommerhus = new Sommerhus(0, owner.EjerID, location, classification, areaID, standardPrice);
             if (sommerhus.Save()) {
                 Console.WriteLine("Sommerhus oprettet.");
-            } else {
+            }
+            else {
                 Console.WriteLine("Der skete en fejl.");
             }
         }
 
-        /// <summary>
-        /// Handles the editing of an existing summer house.
-        /// </summary>
         public static void Edit() {
-            Console.WriteLine("Rediger Sommerhus");
+            Console.Write("Sommerhus ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int id)) {
+                Console.WriteLine("Ugyldigt ID.");
+                return;
+            }
+
+            Sommerhus sommerhus = Sommerhus.FindSommerhus(id);
+            if (sommerhus == null) {
+                Console.WriteLine("Sommerhus findes ikke.");
+                return;
+            }
+
+            Console.Write("Ny lokation ({0}): ", sommerhus.Lokation);
+            string location = Console.ReadLine() ?? sommerhus.Lokation;
+            Console.Write("Ny klassifikation ({0}): ", sommerhus.Klassifikation);
+            string classification = Console.ReadLine() ?? sommerhus.Klassifikation;
+            Console.Write("Nyt Område ID ({0}): ", sommerhus.OmraadeID);
+            if (!int.TryParse(Console.ReadLine(), out int areaID)) {
+                areaID = sommerhus.OmraadeID;
+            }
+            Console.Write("Ny Standard Pris ({0}): ", sommerhus.StandardPris);
+            if (!double.TryParse(Console.ReadLine(), out double standardPrice)) {
+                standardPrice = sommerhus.StandardPris;
+            }
+
+            Sommerhus updatedSommerhus = new Sommerhus(id, sommerhus.EjerID, location, classification, areaID, standardPrice);
+            if (updatedSommerhus.Save()) {
+                Console.WriteLine("Sommerhus opdateret.");
+            }
+            else {
+                Console.WriteLine("Der skete en fejl.");
+            }
         }
 
-        /// <summary>
-        /// Handles the deletion of an existing summer house.
-        /// </summary>
         public static void Delete() {
-            Console.WriteLine("Slet Sommerhus");
+            Console.Write("Sommerhus ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int id)) {
+                Console.WriteLine("Ugyldigt ID.");
+                return;
+            }
+
+            Sommerhus sommerhus = Sommerhus.FindSommerhus(id);
+            if (sommerhus == null) {
+                Console.WriteLine("Sommerhus findes ikke.");
+                return;
+            }
+
+            Console.WriteLine("Er du sikker på at du vil slette dette sommerhus? (y/n)");
+            string confirm = Console.ReadLine() ?? "";
+            if (confirm.ToLower() != "y") {
+                Console.WriteLine("Sletning annulleret.");
+                return;
+            }
+
+            if (sommerhus.Delete()) {
+                Console.WriteLine("Sommerhus slettet.");
+            }
+            else {
+                Console.WriteLine("Der skete en fejl.");
+            }
         }
 
-        /// <summary>
-        /// Displays information about a summer house.
-        /// </summary>
         public static void Show() {
-            Console.WriteLine("Vis Sommerhus");
+            Console.Write("Sommerhus ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int id)) {
+                Console.WriteLine("Ugyldigt ID.");
+                return;
+            }
+
+            Sommerhus sommerhus = Sommerhus.FindSommerhus(id);
+            if (sommerhus == null) {
+                Console.WriteLine("Sommerhus findes ikke.");
+                return;
+            }
+
+            Console.WriteLine("ID: {0}", sommerhus.HusID);
+            Console.WriteLine("Ejer ID: {0}", sommerhus.EjerID);
+            Console.WriteLine("Lokation: {0}", sommerhus.Lokation);
+            Console.WriteLine("Klassifikation: {0}", sommerhus.Klassifikation);
+            Console.WriteLine("Område ID: {0}", sommerhus.OmraadeID);
+            Console.WriteLine("Standard Pris: {0}", sommerhus.StandardPris);
         }
     }
 }
