@@ -5,7 +5,8 @@ namespace H2_OOP_OPG {
     /// <summary>
     /// Represents an owner with personal and contact information.
     /// </summary>
-    public class Ejer {
+    public class Ejer
+    {
         /// <summary>
         /// Gets the unique identifier for the owner.
         /// </summary>
@@ -39,7 +40,8 @@ namespace H2_OOP_OPG {
         /// <param name="email">The email address of the owner.</param>
         /// <param name="tlf">The phone number of the owner.</param>
         /// <param name="adresse">The address of the owner.</param>
-        public Ejer(int ejerID, string navn, string email, string tlf, string adresse) {
+        public Ejer(int ejerID, string navn, string email, string tlf, string adresse)
+        {
             EjerID = ejerID;
             Navn = navn;
             Email = email;
@@ -48,7 +50,8 @@ namespace H2_OOP_OPG {
         }
 
 
-        public static Ejer FindEjer(int id) {
+        public static Ejer FindEjer(int id)
+        {
             MySqlConnection connection = DB.openConnection();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM Ejer WHERE EjerID = @id";
@@ -61,7 +64,8 @@ namespace H2_OOP_OPG {
             return ejer;
         }
 
-        public static Ejer FindEjer(string email) {
+        public static Ejer FindEjer(string email)
+        {
             MySqlConnection connection = DB.openConnection();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM Ejer WHERE Email = @email";
@@ -74,14 +78,35 @@ namespace H2_OOP_OPG {
             return ejer;
         }
 
-        public bool Save() {
+        public bool Save()
+        {
             MySqlConnection connection = DB.openConnection();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO Ejer (Navn, Email, Tlf, Adresse) VALUES (@navn, @email, @tlf, @adresse)";
+            command.CommandText = @"
+                INSERT INTO Ejer (EjerID, Navn, Email, Tlf, Adresse)
+                VALUES (@ejerID, @navn, @email, @tlf, @adresse)
+                ON DUPLICATE KEY UPDATE
+                    Navn = VALUES(Navn),
+                    Email = VALUES(Email),
+                    Tlf = VALUES(Tlf),
+                    Adresse = VALUES(Adresse)";
+            command.Parameters.AddWithValue("@ejerID", EjerID);
             command.Parameters.AddWithValue("@navn", Navn);
             command.Parameters.AddWithValue("@email", Email);
             command.Parameters.AddWithValue("@tlf", Tlf);
             command.Parameters.AddWithValue("@adresse", Adresse);
+
+            int rows = command.ExecuteNonQuery();
+            connection.Close();
+            return rows > 0;
+        }
+
+        public bool Delete()
+        {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM Ejer WHERE EjerID = @id";
+            command.Parameters.AddWithValue("@id", EjerID);
 
             int rows = command.ExecuteNonQuery();
             connection.Close();
