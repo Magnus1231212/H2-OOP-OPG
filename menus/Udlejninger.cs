@@ -1,5 +1,4 @@
 namespace H2_OOP_OPG {
-    using Models;
 
     /// <summary>
     /// Handles operations related to bookings, including creating, editing, deleting, and viewing them.

@@ -1,5 +1,4 @@
 namespace H2_OOP_OPG {
-    using Models;
     using MySqlConnector;
 
     /// <summary>
