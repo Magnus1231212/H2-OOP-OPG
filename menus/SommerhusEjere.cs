@@ -109,14 +109,53 @@ namespace H2_OOP_OPG {
         /// Handles the deletion of an existing summer house owner.
         /// </summary>
         public static void Delete() {
-            Console.WriteLine("Slet Sommerhus Ejer");
+            Console.WriteLine("Ejer ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int id)) {
+                Console.WriteLine("Ugyldigt ID.");
+                return;
+            }
+
+            Ejer owner = Ejer.FindEjer(id);
+            if (owner == null) {
+                Console.WriteLine("Ejer findes ikke.");
+                return;
+            }
+
+            Console.WriteLine($"Er du sikker på at du vil slette {owner.Navn}? (y/n)");
+            string confirm = Console.ReadLine() ?? "";
+            if (confirm != "y") {
+                Console.WriteLine("Sletning annulleret.");
+                return;
+            }
+
+            if (owner.Delete()) {
+                Console.WriteLine("Ejer slettet.");
+            } else {
+                Console.WriteLine("Der skete en fejl.");
+            }
         }
 
         /// <summary>
         /// Displays information about a summer house owner.
         /// </summary>
         public static void Show() {
-            Console.WriteLine("Vis Sommerhus Ejer");
+            Console.WriteLine("Ejer ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int id)) {
+                Console.WriteLine("Ugyldigt ID.");
+                return;
+            }
+
+            Ejer owner = Ejer.FindEjer(id);
+            if (owner == null) {
+                Console.WriteLine("Ejer findes ikke.");
+                return;
+            }
+
+            Console.WriteLine($"ID: {owner.EjerID}");
+            Console.WriteLine($"Navn: {owner.Navn}");
+            Console.WriteLine($"Email: {owner.Email}");
+            Console.WriteLine($"Telefon: {owner.Tlf}");
+            Console.WriteLine($"Adresse: {owner.Adresse}");
         }
     }
 }
