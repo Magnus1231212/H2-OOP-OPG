@@ -1,4 +1,5 @@
 namespace H2_OOP_OPG;
+using MySqlConnector;
 
 /// <summary>
 /// Represents a seasonal category with specific attributes.
@@ -43,5 +44,19 @@ public class Saesonkategori {
         Uger = uger;
         Saeson = saeson;
         PrisProcent = prisProcent;
+    }
+
+    public static Saesonkategori FindSaesonkategori(int id) {
+        MySqlConnection connection = DB.openConnection();
+        MySqlCommand command = connection.CreateCommand();
+        command.CommandText = "SELECT * FROM Saesonkategori WHERE KategoriID = @id";
+        command.Parameters.AddWithValue("@id", id);
+
+        MySqlDataReader reader = command.ExecuteReader();
+        if (!reader.Read()) {
+            return null;
+        }
+        Saesonkategori kategori = Parsing.ParseSaesonkategori(reader);
+        return kategori;
     }
 }

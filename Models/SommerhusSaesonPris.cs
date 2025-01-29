@@ -1,4 +1,5 @@
 namespace H2_OOP_OPG;
+using MySqlConnector;
 
 /// <summary>
 /// Represents the seasonal price for a summer house.
@@ -29,5 +30,20 @@ public class SommerhusSaesonPris {
         StandardPris = standardpris;
         SommerhusID = sommerhusID;
         SaesonkategoriID = saesonkategoriID;
+    }
+
+    public static SommerhusSaesonPris FindSommerhusSaesonPris(int HusID) {
+        MySqlConnection connection = DB.openConnection();
+        MySqlCommand command = connection.CreateCommand();
+        command.CommandText = "SELECT * FROM SommerhusSaesonPris WHERE SommerhusID = @id";
+        command.Parameters.AddWithValue("@id", HusID);
+
+        MySqlDataReader reader = command.ExecuteReader();
+        if (!reader.Read()) {
+            return null;
+        }
+        SommerhusSaesonPris pris = Parsing.ParseSommerhusSaesonPris(reader);
+        return pris;
+
     }
 }

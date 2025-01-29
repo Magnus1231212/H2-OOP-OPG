@@ -58,6 +58,8 @@ class Program {
             // Array of actions to be called
             Action[] cases = {
                 () => SommerhusEjere.SubMenu(),
+                null,
+                () => Udlejninger.SubMenu(),
             };
 
             // Build submenu

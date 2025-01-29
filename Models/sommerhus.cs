@@ -1,5 +1,7 @@
 namespace H2_OOP_OPG.Models;
 
+using MySqlConnector;
+
 /// <summary>
 /// Represents a summer house with various properties such as ID, location, classification, and standard price.
 /// </summary>
@@ -50,5 +52,18 @@ public class Sommerhus {
         Klassifikation = klassifikation;
         OmraadeID = omraadeID;
         StandardPris = standardPris;
+    }
+
+    public static Sommerhus FindSommerhus(int id) {
+        MySqlConnection connection = DB.openConnection();
+        MySqlCommand command = connection.CreateCommand();
+        command.CommandText = "SELECT * FROM Sommerhus WHERE HusID = @id";
+        command.Parameters.AddWithValue("@id", id);
+
+        MySqlDataReader reader = command.ExecuteReader();
+        reader.Read();
+        Sommerhus sommerhus = Parsing.ParseSommerhus(reader);
+        connection.Close();
+        return sommerhus;
     }
 }
