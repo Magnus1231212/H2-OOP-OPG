@@ -75,14 +75,15 @@ namespace H2_OOP_OPG {
             }
 
             Console.WriteLine("Nyt navn: ");
-            string name = Console.ReadLine() ?? inspector.Navn;
+            string name = Console.ReadLine() ?? "";
+            if (string.IsNullOrEmpty(name)) {
+                name = inspector.Navn;
+            }
 
             Console.WriteLine("Ny kontaktinfo: ");
-            string contactInfo = Console.ReadLine() ?? inspector.KontaktInfo;
-
-            if (name == "" || contactInfo == "") {
-                Console.WriteLine("Alle felter skal udfyldes.");
-                return;
+            string contactInfo = Console.ReadLine() ?? "";
+            if (string.IsNullOrEmpty(contactInfo)) {
+                contactInfo = inspector.KontaktInfo;
             }
 
             if (Inspektoer.UpdateInspektoer(id, name, contactInfo)) {
@@ -100,6 +101,20 @@ namespace H2_OOP_OPG {
             Console.WriteLine("ID på Inspektør: ");
             int id = int.Parse(Console.ReadLine() ?? "0");
 
+            Inspektoer inspector = Inspektoer.FindInspektoer(id);
+
+            if (inspector == null) {
+                Console.WriteLine("Ingen Inspektør med det ID.");
+                return;
+            }
+
+            Console.WriteLine($"Er du sikker på at du vil slette {inspector.Navn}? (y/n)");
+            string confirm = Console.ReadLine() ?? "";
+            if (confirm != "y") {
+                Console.WriteLine("Sletning annulleret.");
+                return;
+            }
+
             if (Inspektoer.DeleteInspektoer(id)) {
                 Console.WriteLine("Inspektør slettet.");
             }
@@ -112,7 +127,21 @@ namespace H2_OOP_OPG {
         /// Displays information about a summer house owner.
         /// </summary>
         public static void Show() {
-            Console.WriteLine("Vis Sommerhus Ejer");
+            Console.WriteLine("ID på Inspektør: ");
+            int id = int.Parse(Console.ReadLine() ?? "0");
+
+            Inspektoer inspector = Inspektoer.FindInspektoer(id);
+
+            if (inspector == null) {
+                Console.WriteLine("Ingen Inspektør med det ID.");
+                return;
+            }
+
+            Console.Clear();
+
+            Console.WriteLine($"ID: {inspector.InspektoerID}");
+            Console.WriteLine($"Navn: {inspector.Navn}");
+            Console.WriteLine($"Kontaktinfo: {inspector.KontaktInfo}");
         }
     }
 }

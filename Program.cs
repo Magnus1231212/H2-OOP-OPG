@@ -58,8 +58,11 @@ class Program {
             // Array of actions to be called
             Action[] cases = {
                 () => SommerhusEjere.SubMenu(),
-                null,
+                // () => Sommerhuse.SubMenu(),
                 () => Udlejninger.SubMenu(),
+                // () => Omraader.SubMenu(),
+                // () => SæsonKategorier.SubMenu(),
+                () => Inspectører.SubMenu(),
             };
 
             // Build submenu

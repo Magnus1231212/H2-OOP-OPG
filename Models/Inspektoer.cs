@@ -39,8 +39,10 @@ namespace H2_OOP_OPG {
             command.Parameters.AddWithValue("@id", id);
 
             MySqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            Inspektoer inspektoer = Parsing.ParseInspektoer(reader);
+            Inspektoer inspektoer = null;
+            if (reader.Read()) {
+                inspektoer = Parsing.ParseInspektoer(reader);
+            }
             connection.Close();
             return inspektoer;
         }
@@ -52,8 +54,10 @@ namespace H2_OOP_OPG {
             command.Parameters.AddWithValue("@navn", name);
 
             MySqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            Inspektoer inspektoer = Parsing.ParseInspektoer(reader);
+            Inspektoer inspektoer = null;
+            if (reader.Read()) {
+                inspektoer = Parsing.ParseInspektoer(reader);
+            }
             connection.Close();
             return inspektoer;
         }
@@ -61,7 +65,7 @@ namespace H2_OOP_OPG {
         public bool Save() {
             MySqlConnection connection = DB.openConnection();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO Ejer (Navn, KontaktInfo) VALUES (@navn, @kontaktinfo)";
+            command.CommandText = "INSERT INTO Inspektoer (Navn, KontaktInfo) VALUES (@navn, @kontaktinfo)";
             command.Parameters.AddWithValue("@Navn", Navn);
             command.Parameters.AddWithValue("@kontaktinfo", KontaktInfo);
 
