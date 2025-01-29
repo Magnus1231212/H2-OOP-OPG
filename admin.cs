@@ -39,6 +39,27 @@ namespace H2_OOP_OPG {
             Console.ReadKey();
         }
 
+        public static void CreateUser() {
+            Console.Clear();
+            Console.WriteLine("Create User");
+
+            Console.Write("Username: ");
+            string username = Console.ReadLine() ?? string.Empty;
+
+            Console.Write("Password: ");
+            string password = Console.ReadLine() ?? string.Empty;
+
+            using (var connection = DB.openConnection()) {
+                var query = "INSERT INTO User (Brugernavn, Adgangskode) VALUES (@username, @password)";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@username", username);
+                command.Parameters.AddWithValue("@password", HashPassword(password));
+                command.ExecuteNonQuery();
+            }
+            Console.WriteLine("User created");
+            Console.ReadKey();
+        }
+
         /// <summary>
         /// Checks if the admin user is currently logged in.
         /// </summary>
