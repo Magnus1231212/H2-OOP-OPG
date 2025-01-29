@@ -1,3 +1,5 @@
+using MySqlConnector;
+
 namespace H2_OOP_OPG {
     /// <summary>
     /// Represents an owner with personal and contact information.
@@ -42,6 +44,19 @@ namespace H2_OOP_OPG {
             Email = email;
             Tlf = tlf;
             Adresse = adresse;
+        }
+
+        public static Ejer FindEjer(int id) {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Ejer WHERE EjerID = @id";
+            command.Parameters.AddWithValue("@id", id);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            Ejer ejer = Parsing.ParseEjer(reader);
+            connection.Close();
+            return ejer;
         }
     }
 }

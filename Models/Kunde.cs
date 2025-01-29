@@ -1,3 +1,5 @@
+using MySqlConnector;
+
 namespace H2_OOP_OPG {
     /// <summary>
     /// Represents a customer with contact information.
@@ -35,6 +37,19 @@ namespace H2_OOP_OPG {
             Navn = navn;
             Telefon = telefon;
             Email = email;
+        }
+
+        public static Kunde FindKunde(int id) {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Kunde WHERE KundeID = @id";
+            command.Parameters.AddWithValue("@id", id);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            Kunde kunde = Parsing.ParseKunde(reader);
+            connection.Close();
+            return kunde;
         }
     }
 }

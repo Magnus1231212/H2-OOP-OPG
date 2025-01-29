@@ -1,3 +1,5 @@
+using MySqlConnector;
+
 namespace H2_OOP_OPG {
     /// <summary>
     /// Represents an inspector with contact information.
@@ -28,6 +30,19 @@ namespace H2_OOP_OPG {
             InspektoerID = inspektoerID;
             Navn = navn;
             KontaktInfo = kontaktInfo;
+        }
+
+        public static Inspektoer FindInspektoer(int id) {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Inspektoer WHERE InspektoerID = @id";
+            command.Parameters.AddWithValue("@id", id);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            Inspektoer inspektoer = Parsing.ParseInspektoer(reader);
+            connection.Close();
+            return inspektoer;
         }
     }
 }
