@@ -54,18 +54,22 @@ public class Sommerhus {
         StandardPris = standardPris;
     }
 
-    public static Sommerhus FindSommerhus(int id) {
-        MySqlConnection connection = DB.openConnection();
-        MySqlCommand command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM Sommerhus WHERE HusID = @id";
-        command.Parameters.AddWithValue("@id", id);
+public static Sommerhus FindSommerhus(int id) {
+    MySqlConnection connection = DB.openConnection();
+    MySqlCommand command = connection.CreateCommand();
+    command.CommandText = "SELECT * FROM Sommerhus WHERE HusID = @id";
+    command.Parameters.AddWithValue("@id", id);
 
-        MySqlDataReader reader = command.ExecuteReader();
-        reader.Read();
-        Sommerhus sommerhus = Parsing.ParseSommerhus(reader);
+    MySqlDataReader reader = command.ExecuteReader();
+    if (!reader.Read()) {  // Check if data exists before parsing
         connection.Close();
-        return sommerhus;
+        return null;
     }
+
+    Sommerhus sommerhus = Parsing.ParseSommerhus(reader);
+    connection.Close();
+    return sommerhus;
+}
 
     public static Sommerhus FindSommerhus(string location) {
         MySqlConnection connection = DB.openConnection();
