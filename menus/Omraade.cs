@@ -2,7 +2,7 @@ namespace H2_OOP_OPG {
     /// <summary>
     /// Handles operations related to summer houses, including creating, editing, deleting, and viewing them.
     /// </summary>
-    class Omraade {
+    class Omraader {
         /// <summary>
         /// Displays the submenu for managing summer houses.
         /// </summary>

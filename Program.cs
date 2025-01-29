@@ -60,7 +60,7 @@ class Program {
                 () => SommerhusEjere.SubMenu(),
                 () => Sommerhuse.SubMenu(),
                 () => Udlejninger.SubMenu(),
-                () => Omraade.SubMenu(),
+                () => Omraader.SubMenu(),
                 () => SaesonKategorier.SubMenu(),
                 () => Inspectører.SubMenu(),
             };
