@@ -1,3 +1,5 @@
+using MySqlConnector;
+
 namespace H2_OOP_OPG {
     /// <summary>
     /// Represents a consultant with contact information.
@@ -28,6 +30,19 @@ namespace H2_OOP_OPG {
             KonsulentID = konsulentID;
             Navn = navn;
             KontaktInfo = kontaktInfo;
+        }
+
+        public static Konsulent FindKonsulent(int id) {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Konsulent WHERE KonsulentID = @id";
+            command.Parameters.AddWithValue("@id", id);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            Konsulent konsulent = Parsing.ParseKonsulent(reader);
+            connection.Close();
+            return konsulent;
         }
     }
 }
