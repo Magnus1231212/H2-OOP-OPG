@@ -1,4 +1,6 @@
 namespace H2_OOP_OPG {
+    using MySqlConnector;
+
     /// <summary>
     /// Represents an area associated with a consultant.
     /// </summary>
@@ -21,13 +23,56 @@ namespace H2_OOP_OPG {
         /// <summary>
         /// Initializes a new instance of the <see cref="Omraade"/> class.
         /// </summary>
-        /// <param name="omraadeID">The unique identifier for the area.</param>
-        /// <param name="navn">The name of the area.</param>
-        /// <param name="konsulentID">The unique identifier for the consultant.</param>
         public Omraade(int omraadeID, string navn, int konsulentID) {
             OmraadeID = omraadeID;
             Navn = navn;
             KonsulentID = konsulentID;
+        }
+
+        public static Omraade FindOmraade(int id) {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Omraade WHERE OmraadeID = @id";
+            command.Parameters.AddWithValue("@id", id);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            if (!reader.Read()) {
+                connection.Close();
+                return null;
+            }
+
+            Omraade omraade = new Omraade(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2));
+            connection.Close();
+            return omraade;
+        }
+
+        public bool Save() {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = @"
+                INSERT INTO Omraade (OmraadeID, Navn, KonsulentID)
+                VALUES (@omraadeID, @navn, @konsulentID)
+                ON DUPLICATE KEY UPDATE
+                    Navn = VALUES(Navn),
+                    KonsulentID = VALUES(KonsulentID)";
+            command.Parameters.AddWithValue("@omraadeID", OmraadeID);
+            command.Parameters.AddWithValue("@navn", Navn);
+            command.Parameters.AddWithValue("@konsulentID", KonsulentID);
+
+            int rows = command.ExecuteNonQuery();
+            connection.Close();
+            return rows > 0;
+        }
+
+        public bool Delete() {
+            MySqlConnection connection = DB.openConnection();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM Omraade WHERE OmraadeID = @id";
+            command.Parameters.AddWithValue("@id", OmraadeID);
+
+            int rows = command.ExecuteNonQuery();
+            connection.Close();
+            return rows > 0;
         }
     }
 }
