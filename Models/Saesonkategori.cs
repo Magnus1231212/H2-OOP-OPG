@@ -59,4 +59,19 @@ public class Saesonkategori {
         Saesonkategori kategori = Parsing.ParseSaesonkategori(reader);
         return kategori;
     }
+
+    public static bool UpdateSaesonkategori(int id, string name, string weeks, SaesonkategoriEnum season, double pricePercentage) {
+        MySqlConnection connection = DB.openConnection();
+        MySqlCommand command = connection.CreateCommand();
+        command.CommandText = "UPDATE Saesonkategori SET Navn = @navn, Uger = @uger, Saeson = @saeson, PrisProcent = @prisprocent WHERE KategoriID = @id";
+        command.Parameters.AddWithValue("@id", id);
+        command.Parameters.AddWithValue("@navn", name);
+        command.Parameters.AddWithValue("@uger", weeks);
+        command.Parameters.AddWithValue("@saeson", season.ToString());
+        command.Parameters.AddWithValue("@prisprocent", pricePercentage);
+
+        int rows = command.ExecuteNonQuery();
+        connection.Close();
+        return rows > 0;
+    }
 }
