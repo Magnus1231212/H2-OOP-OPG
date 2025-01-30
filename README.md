@@ -78,3 +78,6 @@ Filnavn: `appsettings.json`
 11. Klik på "Udfør" for at importere databasen.
 
 Din database er nu opsat og klar til brug med applikationen.
+
+## Database diagram
+![database diagram](https://github.com/Magnus1231212/H2-OOP-OPG/blob/main/sommerhus.png?raw=true)
